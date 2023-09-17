@@ -11,4 +11,11 @@ describe("Component: Input", () => {
     // the method queryByTestId don't returns exception - case don't find returns null
     expect(activityIndicator).toBeNull(); // this component will not be found because the isLoading property is false
   });
+
+  it("should be render with activity indicator if isLoading prop is true", () => {
+    render(<Input isLoading />);
+    const activityIndicator = screen.getByTestId("activity-indicator");
+
+    expect(activityIndicator).toBeTruthy();
+  });
 });
