@@ -1,7 +1,9 @@
-import { render, screen, waitFor } from "@__tests__/utils/customRender";
+import { act, render, screen, waitFor } from "@__tests__/utils/customRender";
 import { Routes } from ".";
 import { saveStorageCity } from "@libs/asyncStorage/cityStorage";
 import { CityProvider } from "@contexts/CityContext";
+import { api } from "@services/api";
+import { mockWeatherAPIResponse } from "@__tests__/mocks/api/mockWeatherAPIResponse";
 //import { SafeAreaProvider } from "react-native-safe-area-context";
 
 describe("Routes", () => {
@@ -16,6 +18,8 @@ describe("Routes", () => {
   });
 
   it("should be render Dashboard screen when has city selected.", async () => {
+    jest.spyOn(api, "get").mockResolvedValue({ data: mockWeatherAPIResponse });
+
     const city = {
       id: "1",
       name: "Teresina",
@@ -25,10 +29,13 @@ describe("Routes", () => {
 
     await saveStorageCity(city);
 
-    const { debug } = render(<Routes /> /* {wrapper: CityProvider} */);
+    await act(() =>
+      waitFor(() => render(<Routes /> /* {wrapper: CityProvider} */))
+    );
     // we can use this format for give context to Routes of city state
     // here we let's use the custom render with the  all providers contexts that ever let's use
 
-    console.log(debug);
+    const title = screen.getByText(city.name);
+    expect(title).toBeTruthy();
   });
 });
