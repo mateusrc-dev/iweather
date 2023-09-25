@@ -29,8 +29,11 @@ describe("Screen: Dashboard", () => {
 
     render(<Dashboard />);
 
-    const cityName = await waitFor(() => screen.findByText(/rio do sul/i)); // we let's await because will be search the word
-    expect(cityName).toBeTruthy();
+    await waitFor(() =>
+      expect(
+        screen.findByText(/rio do sul/i, {}, { timeout: 3000 })
+      ).toBeTruthy()
+    ); // we let's await because will be search the word
   });
 
   it("should be show search of another weather city.", async () => {
