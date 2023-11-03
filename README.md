@@ -1,6 +1,6 @@
 This application consists of being able to monitor data about the climate of a region.
 
-This application consumes an API that returns climate data for a given region
+This application consumes an API 'OpenWeather' that returns climate data for a given region
 
 Some techniques used to create the application:
 
